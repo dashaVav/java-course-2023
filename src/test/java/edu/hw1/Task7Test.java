@@ -10,7 +10,9 @@ public class Task7Test {
     @ParameterizedTest
     @CsvSource({
         "8, 1, 4",
-        "10, 0, 10"
+        "8, 5, 4",
+        "10, 0, 10",
+        "42, 10, 42"
     })
     public void testRotateRightValidData(int n, int shift, int expectedResult) {
         int actualResult = Task7.rotateRight(n, shift);

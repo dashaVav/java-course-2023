@@ -9,8 +9,10 @@ public final class Task7 {
             throw new IllegalArgumentException();
         }
 
-        String binaryString = Integer.toBinaryString(Math.abs(n));
-        String rotatedBinary = binaryString.substring(shift) + binaryString.substring(0, shift);
+        String binaryString = Integer.toBinaryString(n);
+        int moduloShift = shift % binaryString.length();
+
+        String rotatedBinary = binaryString.substring(moduloShift) + binaryString.substring(0, moduloShift);
 
         return Integer.parseInt(rotatedBinary, 2);
     }
@@ -21,8 +23,10 @@ public final class Task7 {
         }
 
         String binaryString = Integer.toBinaryString(n);
-        String rotatedBinary = binaryString.substring(binaryString.length() - shift)
-            + binaryString.substring(0, binaryString.length() - shift);
+        int moduloShift = shift % binaryString.length();
+
+        String rotatedBinary = binaryString.substring(binaryString.length() - moduloShift)
+            + binaryString.substring(0, binaryString.length() - moduloShift);
 
         return Integer.parseInt(rotatedBinary, 2);
     }
