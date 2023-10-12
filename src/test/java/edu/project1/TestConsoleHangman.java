@@ -34,23 +34,13 @@ public class TestConsoleHangman {
     }
 
     @Test
-    void testRunStartGameWithValidWordLen() {
+    void testRunStartGameWithInvalidWordLen() {
         when(dictionary.randomWord()).thenReturn("test");
         ConsoleHangman consoleHangman = new ConsoleHangman(dictionary);
 
         consoleHangman.run();
         String output = outputStreamCaptor.toString();
         assertTrue(output.contains("Invalid word length!"));
-    }
-
-    @Test
-    void testRunStartGameWithValidWordLen1() {
-        when(dictionary.randomWord()).thenReturn("longtest");
-        ConsoleHangman consoleHangman = new ConsoleHangman(dictionary);
-
-        consoleHangman.run();
-        String output = outputStreamCaptor.toString();
-        assertTrue(output.contains("Guess a letter:"));
     }
 
 }

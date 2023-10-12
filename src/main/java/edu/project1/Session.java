@@ -1,11 +1,9 @@
 package edu.project1;
 
 import java.util.Arrays;
-import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 
-@Getter
 @Setter
 class Session {
     private final String answer;
