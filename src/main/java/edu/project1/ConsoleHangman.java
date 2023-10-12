@@ -6,46 +6,56 @@ import org.apache.logging.log4j.Logger;
 
 public class ConsoleHangman {
     private final static Logger LOGGER = LogManager.getLogger();
+    private final String hiddenWord;
+    private final static int MIN_LEN_HIDDEN_WORD = 5;
+
+    ConsoleHangman(Dictionary dictionary) {
+        hiddenWord = dictionary.randomWord();
+    }
+
+    private boolean isValidWord() {
+        return hiddenWord.length() >= MIN_LEN_HIDDEN_WORD;
+    }
 
     public void run() {
-        Dictionary dictionary = new Dictionary();
-        Session session = new Session(dictionary.randomWord());
+        if (!isValidWord()) {
+            LOGGER.info("Invalid word length!");
+            return;
+        }
+
+        Session session = new Session(hiddenWord);
         Scanner scanner = new Scanner(System.in);
 
-        while (true) {
+        GuessResult resultOfGuess = null;
+
+        while (!(resultOfGuess instanceof GuessResult.Defeat)
+            && !(resultOfGuess instanceof GuessResult.Win)
+            && !(resultOfGuess instanceof GuessResult.Exit)) {
+
             LOGGER.info("Guess a letter:");
-
-            if (!scanner.hasNext()) {
-                session.giveUp();
-            }
-            String input = scanner.nextLine();
-
-            if (input.length() != 1) {
-                continue;
-            }
-
-            GuessResult resultOfGuess = tryGuess(session, input);
-            printState(resultOfGuess);
-
-            if (resultOfGuess instanceof GuessResult.Win || resultOfGuess instanceof GuessResult.Defeat) {
-                break;
+            if (scanner.hasNext()) {
+                String input = scanner.nextLine();
+                if (input.length() != 1) {
+                    continue;
+                }
+                resultOfGuess = tryGuess(session, input);
+            } else {
+                resultOfGuess = session.giveUp();
+                printState(resultOfGuess);
             }
         }
     }
 
     private GuessResult tryGuess(Session session, String input) {
-        return session.guess(input.charAt(0));
+        GuessResult result = session.guess(input.charAt(0));
+        printState(result);
+        return result;
     }
 
     private void printState(GuessResult guess) {
         String[] messages = guess.message().split("\n");
-
-        LOGGER.info(messages[0]);
-
-        LOGGER.info("The word: " + String.valueOf(guess.state()));
-
-        if (guess instanceof GuessResult.Win || guess instanceof GuessResult.Defeat) {
-            LOGGER.info(messages[1]);
+        for (String mes : messages) {
+            LOGGER.info(mes);
         }
     }
 }

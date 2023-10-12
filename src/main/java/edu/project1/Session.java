@@ -1,49 +1,53 @@
 package edu.project1;
 
 import java.util.Arrays;
+import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 
+@Getter
+@Setter
 class Session {
     private final String answer;
-    private final char[] userAnswer;
+    private String userAnswer;
     private final static int MAX_ATTEMPTS = 5;
     private int attempts;
 
     Session(String answer) {
         this.answer = answer;
-        userAnswer = new char[answer.length()];
-        Arrays.fill(userAnswer, '*');
+
+        char[] str = new char[answer.length()];
+        Arrays.fill(str, '*');
+        userAnswer = String.valueOf(str);
+
         attempts = 0;
     }
 
     @NotNull GuessResult guess(char guess) {
-        if (!answer.contains(String.valueOf(guess)) || Arrays.toString(userAnswer).contains(String.valueOf(guess))) {
+        if (!answer.contains(String.valueOf(guess)) || userAnswer.contains(String.valueOf(guess))) {
             attempts++;
             if (attempts == MAX_ATTEMPTS) {
                 return new GuessResult.Defeat(userAnswer, attempts, MAX_ATTEMPTS);
             }
-            return new GuessResult.FailedGuess(
-                userAnswer,
-                attempts,
-                MAX_ATTEMPTS
-            );
+            return new GuessResult.FailedGuess(userAnswer, attempts, MAX_ATTEMPTS);
         }
 
+        char[] changedUserAnswer = userAnswer.toCharArray();
         for (int i = 0; i < answer.length(); i++) {
-            if (answer.toCharArray()[i] == guess && userAnswer[i] == '*') {
-                userAnswer[i] = guess;
+            if (answer.toCharArray()[i] == guess) {
+                changedUserAnswer[i] = guess;
             }
         }
+        userAnswer = String.valueOf(changedUserAnswer);
 
-        if (answer.equals(String.valueOf(userAnswer))) {
+        if (answer.equals(userAnswer)) {
             return new GuessResult.Win(userAnswer, attempts, MAX_ATTEMPTS);
         }
 
         return new GuessResult.SuccessfulGuess(userAnswer, attempts, MAX_ATTEMPTS);
-
     }
 
-    void giveUp() {
-        System.exit(0);
+    @NotNull GuessResult giveUp() {
+        return new GuessResult.Exit(userAnswer, attempts, MAX_ATTEMPTS);
     }
 }

@@ -5,7 +5,8 @@ final class Main {
     }
 
     public static void main(String[] args) {
-        ConsoleHangman newGame = new ConsoleHangman();
+        Dictionary dictionary = new Dictionary();
+        ConsoleHangman newGame = new ConsoleHangman(dictionary);
         newGame.run();
     }
 }
