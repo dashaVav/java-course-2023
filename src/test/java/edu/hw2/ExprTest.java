@@ -1,11 +1,13 @@
 package edu.hw2;
 
-import edu.hw2.Expr.Addition;
-import edu.hw2.Expr.Constant;
-import edu.hw2.Expr.Exponent;
-import edu.hw2.Expr.Multiplication;
-import edu.hw2.Expr.Negate;
-import edu.hw2.Expr.Subtraction;
+import edu.hw2.task1.Addition;
+import edu.hw2.task1.Constant;
+import edu.hw2.task1.Division;
+import edu.hw2.task1.Exponent;
+import edu.hw2.task1.Expr;
+import edu.hw2.task1.Multiplication;
+import edu.hw2.task1.Negate;
+import edu.hw2.task1.Subtraction;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -51,7 +53,7 @@ public class ExprTest {
 
     @Test
     public void testDivision() {
-        Expr expr = new Expr.Division(6, 2);
+        Expr expr = new Division(6, 2);
         assertEquals(3, expr.evaluate(), DELTA);
     }
 

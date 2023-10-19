@@ -1,5 +1,6 @@
 package edu.hw2;
 
+import edu.hw2.task2.Rectangle;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;

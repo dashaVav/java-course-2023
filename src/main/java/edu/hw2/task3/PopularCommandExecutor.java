@@ -1,4 +1,4 @@
-package edu.hw2;
+package edu.hw2.task3;
 
 public final class PopularCommandExecutor {
     private final ConnectionManager manager;
@@ -29,12 +29,4 @@ public final class PopularCommandExecutor {
             }
         }
     }
-
-//    public static void main(String[] args) {
-//        ConnectionManager defaultManager = new ConnectionManager.DefaultConnectionManager();
-//        ConnectionManager faultyManager = new ConnectionManager.FaultyConnectionManager();
-//        PopularCommandExecutor executor = new PopularCommandExecutor(defaultManager, 10);
-//        executor.updatePackages();
-//    }
-
 }

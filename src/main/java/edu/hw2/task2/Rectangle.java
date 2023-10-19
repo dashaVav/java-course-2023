@@ -1,10 +1,10 @@
-package edu.hw2;
+package edu.hw2.task2;
 
 public class Rectangle {
     private final int width;
     private final int height;
 
-    Rectangle(int width, int height) {
+    public Rectangle(int width, int height) {
         if (width <= 0 || height <= 0) {
             throw new IllegalArgumentException("Sides cannot be less than or equal to 0");
         }
@@ -12,15 +12,15 @@ public class Rectangle {
         this.height = height;
     }
 
-    Rectangle setWidth(int width) {
+    public Rectangle setWidth(int width) {
         return new Rectangle(width, this.height);
     }
 
-    Rectangle setHeight(int height) {
+    public Rectangle setHeight(int height) {
         return new Rectangle(this.width, height);
     }
 
-    double area() {
+    public double area() {
         return width * height;
     }
 }

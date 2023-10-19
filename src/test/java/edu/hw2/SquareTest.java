@@ -1,5 +1,7 @@
 package edu.hw2;
 
+import edu.hw2.task2.Rectangle;
+import edu.hw2.task2.Square;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
