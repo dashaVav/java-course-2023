@@ -8,7 +8,6 @@ import org.jetbrains.annotations.NotNull;
 class Session {
     private final String answer;
     private String userAnswer;
-    private final static int MAX_ATTEMPTS = 5;
     private int attempts;
 
     Session(String answer) {
@@ -24,10 +23,10 @@ class Session {
     @NotNull GuessResult guess(char guess) {
         if (!answer.contains(String.valueOf(guess)) || userAnswer.contains(String.valueOf(guess))) {
             attempts++;
-            if (attempts == MAX_ATTEMPTS) {
-                return new GuessResult.Defeat(userAnswer, attempts, MAX_ATTEMPTS);
+            if (attempts == GuessResult.MAX_ATTEMPTS) {
+                return new GuessResult.Defeat(userAnswer, attempts);
             }
-            return new GuessResult.FailedGuess(userAnswer, attempts, MAX_ATTEMPTS);
+            return new GuessResult.FailedGuess(userAnswer, attempts);
         }
 
         char[] changedUserAnswer = userAnswer.toCharArray();
@@ -39,13 +38,13 @@ class Session {
         userAnswer = String.valueOf(changedUserAnswer);
 
         if (answer.equals(userAnswer)) {
-            return new GuessResult.Win(userAnswer, attempts, MAX_ATTEMPTS);
+            return new GuessResult.Win(userAnswer, attempts);
         }
 
-        return new GuessResult.SuccessfulGuess(userAnswer, attempts, MAX_ATTEMPTS);
+        return new GuessResult.SuccessfulGuess(userAnswer, attempts);
     }
 
     @NotNull GuessResult giveUp() {
-        return new GuessResult.Exit(userAnswer, attempts, MAX_ATTEMPTS);
+        return new GuessResult.Exit(userAnswer, attempts);
     }
 }

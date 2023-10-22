@@ -7,46 +7,47 @@ sealed interface GuessResult {
 
     int attempt();
 
-    int maxAttempts();
-
     @NotNull String message();
 
-    String[] LIST_OF_PRINTS = {"Missed, mistake %d out of %d.\n", "Hit!\n", "The word: %s\n"};
+    String THE_WORD = "The word: %s\n";
+    String MISSED = "Missed, mistake %d out of %d.\n";
+    String HIT = "Hit!\n";
+    int MAX_ATTEMPTS = 5;
 
-    record Exit(String state, int attempt, int maxAttempts) implements GuessResult {
+    record Exit(String state, int attempt) implements GuessResult {
         @Override
         public @NotNull String message() {
             return "You gave up!";
         }
     }
 
-    record Defeat(String state, int attempt, int maxAttempts) implements GuessResult {
+    record Defeat(String state, int attempt) implements GuessResult {
         @Override
         public @NotNull String message() {
-            return String.format(LIST_OF_PRINTS[0], attempt(), maxAttempts())
-                + String.format(LIST_OF_PRINTS[2], state()) + "You lost!";
+            return String.format(MISSED, attempt(), MAX_ATTEMPTS)
+                + String.format(THE_WORD, state()) + "You lost!";
         }
     }
 
-    record Win(String state, int attempt, int maxAttempts) implements GuessResult {
+    record Win(String state, int attempt) implements GuessResult {
         @Override
         public @NotNull String message() {
-            return LIST_OF_PRINTS[1] + String.format(LIST_OF_PRINTS[2], state()) + "You won!";
+            return  HIT + String.format(THE_WORD, state()) + "You won!";
         }
     }
 
-    record SuccessfulGuess(String state, int attempt, int maxAttempts) implements GuessResult {
+    record SuccessfulGuess(String state, int attempt) implements GuessResult {
         @Override
         public @NotNull String message() {
-            return LIST_OF_PRINTS[1] + String.format(LIST_OF_PRINTS[2], state());
+            return HIT + String.format(THE_WORD, state());
         }
     }
 
-    record FailedGuess(String state, int attempt, int maxAttempts) implements GuessResult {
+    record FailedGuess(String state, int attempt) implements GuessResult {
         @Override
         public @NotNull String message() {
-            return String.format(LIST_OF_PRINTS[0], attempt(), maxAttempts())
-                + String.format(LIST_OF_PRINTS[2], state());
+            return String.format(MISSED, attempt(), MAX_ATTEMPTS)
+                + String.format(THE_WORD, state());
         }
     }
 }
