@@ -43,7 +43,7 @@ public final class Solver {
         return null;
     }
 
-    public static List<Coordinate> createFullPath(Cell end) {
+    private static List<Coordinate> createFullPath(Cell end) {
         Cell current = end;
         List<Coordinate> path = new ArrayList<>();
 

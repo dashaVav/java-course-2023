@@ -9,7 +9,7 @@ public final class Generator {
     private Generator() {
     }
 
-    public enum Direction {
+    private enum Direction {
         LEFT, RIGHT, UP, DOWN
     }
 
@@ -28,7 +28,7 @@ public final class Generator {
         int startX = random.nextInt(width);
         int startY = random.nextInt(height);
 
-        grid[random.nextInt(width)][random.nextInt(height)].setType(Cell.Type.PASSAGE);
+        grid[random.nextInt(height)][random.nextInt(width)].setType(Cell.Type.PASSAGE);
 
         List<Coordinate> stack = new ArrayList<>();
         stack.add(new Coordinate(startX, startY));
