@@ -1,5 +1,6 @@
 package edu.project2;
 
+import java.util.Collections;
 import java.util.List;
 
 public final class Renderer {
@@ -7,19 +8,7 @@ public final class Renderer {
     }
 
     public static String render(Maze maze) {
-        StringBuilder result = new StringBuilder();
-
-        for (int i = 0; i < maze.height(); i++) {
-            for (int j = 0; j < maze.width(); j++) {
-                if (maze.grid()[i][j].getType().equals(Cell.Type.WALL)) {
-                    result.append("█");
-                } else {
-                    result.append(" ");
-                }
-            }
-            result.append("\n");
-        }
-        return result.toString();
+        return render(maze, Collections.emptyList());
     }
 
     public static String render(Maze maze, List<Coordinate> path) {
