@@ -1,6 +1,5 @@
 package edu.hw6.task2;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,7 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Task2Test {
     Path path;
@@ -39,14 +37,11 @@ public class Task2Test {
     }
 
     @Test
-    void testCloneFile() throws IOException, InterruptedException {
+    void testCloneFile() throws IOException {
         Path newPath = Path.of("src/main/resources/hw6/task2/file (1).txt");
 
         Task2.cloneFile(path);
 
-        Thread.sleep(1000);
-
-        assertTrue(newPath.toFile().exists());
         assertEquals(readFromFile(path), readFromFile(newPath));
     }
 
