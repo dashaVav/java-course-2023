@@ -34,7 +34,7 @@ public class Task2Test {
                 file.delete();
             }
         }
-        Files.deleteIfExists(path);
+        Files.deleteIfExists(path.getParent());
     }
 
     @Test
@@ -43,7 +43,7 @@ public class Task2Test {
 
         Task2.cloneFile(path);
 
-        assertTrue(newPath.toFile().exists());
+        assertTrue(Files.exists(newPath));
         assertEquals(readFromFile(path), readFromFile(newPath));
     }
 
