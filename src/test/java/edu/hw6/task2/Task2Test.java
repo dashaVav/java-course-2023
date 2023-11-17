@@ -43,7 +43,7 @@ public class Task2Test {
 
         Task2.cloneFile(path);
 
-        assertTrue(Files.exists(newPath));
+        assertTrue(newPath.toFile().exists());
         assertEquals(readFromFile(path), readFromFile(newPath));
     }
 
