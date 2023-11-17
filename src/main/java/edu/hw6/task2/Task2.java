@@ -1,9 +1,9 @@
 package edu.hw6.task2;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 
 public final class Task2 {
     private Task2() {
@@ -17,17 +17,14 @@ public final class Task2 {
         int version = 1;
         String pathAsString = path.toString();
         Path newPath;
+        String separator = File.separator;
         do {
-            newPath = Path.of(pathAsString.substring(pathAsString.lastIndexOf("/") + 1, pathAsString.lastIndexOf("."))
-                + String.format(" (%d)", version) + pathAsString.substring(pathAsString.lastIndexOf(".")));
+            newPath =
+                Path.of(pathAsString.substring(pathAsString.lastIndexOf(separator) + 1, pathAsString.lastIndexOf("."))
+                    + String.format(" (%d)", version) + pathAsString.substring(pathAsString.lastIndexOf(".")));
             version++;
         } while (newPath.toFile().exists());
 
-        try {
-            Files.copy(path, newPath);
-        } catch (Exception e) {
-            System.out.println("File not created");
-        }
-
+        Files.copy(path, newPath);
     }
 }

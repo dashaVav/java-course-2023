@@ -1,12 +1,9 @@
 package edu.hw6.task2;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.attribute.PosixFileAttributeView;
 import java.util.Objects;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,14 +40,11 @@ public class Task2Test {
     @Test
     void testCloneFile() throws IOException {
         Path newPath = Path.of("src/main/resources/hw6/task2/file (1).txt");
-        assertTrue(path.toFile().exists());
-
 
         Task2.cloneFile(path);
 
-
-//        assertTrue(newPath.toFile().exists());
-//        assertEquals(readFromFile(path), readFromFile(newPath));
+        assertTrue(newPath.toFile().exists());
+        assertEquals(readFromFile(path), readFromFile(newPath));
     }
 
     @Test
