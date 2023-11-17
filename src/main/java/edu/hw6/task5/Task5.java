@@ -59,8 +59,6 @@ public final class Task5 {
             return titleFromResponseBody("");
         }
     }
-    ////забыла вывод массива
-
 
     public static void setClient(HttpClient httpClient) {
         client = httpClient;
