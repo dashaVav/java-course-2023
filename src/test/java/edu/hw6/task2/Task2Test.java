@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.PosixFileAttributeView;
 import java.util.Objects;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,7 +45,10 @@ public class Task2Test {
         Path newPath = Path.of("src/main/resources/hw6/task2/file (1).txt");
 
         Task2.cloneFile(path);
+        System.out.println("Права доступа к текущему каталогу: "
+            + Files.getFileAttributeView(Paths.get("."), PosixFileAttributeView.class).readAttributes().permissions());
 
+        System.out.println(newPath.toFile().exists());
         assertTrue(newPath.toFile().exists());
         assertEquals(readFromFile(path), readFromFile(newPath));
     }

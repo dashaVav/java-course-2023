@@ -23,7 +23,11 @@ public final class Task2 {
             version++;
         } while (newPath.toFile().exists());
 
-        Files.createFile(newPath);
-        Files.copy(path, newPath, StandardCopyOption.REPLACE_EXISTING);
+        try {
+            Files.copy(path, newPath);
+        } catch (Exception e) {
+            System.out.println("File not created");
+        }
+
     }
 }
