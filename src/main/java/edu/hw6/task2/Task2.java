@@ -1,5 +1,6 @@
 package edu.hw6.task2;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -18,10 +19,13 @@ public final class Task2 {
         String pathAsString = path.toString();
         Path newPath;
         do {
-            newPath = Path.of(pathAsString.substring(pathAsString.lastIndexOf("/") + 1, pathAsString.lastIndexOf("."))
-                + String.format(" (%d)", version) + pathAsString.substring(pathAsString.lastIndexOf(".")));
+            newPath = path.getParent().resolve(
+                pathAsString.substring(
+                    pathAsString.lastIndexOf(File.separator) + 1,
+                    pathAsString.lastIndexOf(".")
+                ) + String.format(" (%d)", version) + pathAsString.substring(pathAsString.lastIndexOf(".")));
             version++;
-        } while (newPath.toFile().exists());
+        } while (Files.exists(newPath));
 
         Files.createFile(newPath);
         Files.copy(path, newPath, StandardCopyOption.REPLACE_EXISTING);
