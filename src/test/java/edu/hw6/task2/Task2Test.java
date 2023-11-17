@@ -18,12 +18,14 @@ public class Task2Test {
     @BeforeEach
     void setUp() throws IOException {
         path = Path.of("src/main/resources/hw6/task2/file.txt");
+        Files.createDirectories(path.getParent());
+
         File file = new File(path.toUri());
         Files.writeString(file.toPath(), "hello");
     }
 
     @AfterEach
-    void tearDown() {
+    void tearDown() throws IOException {
         if (path.getParent().toFile().listFiles() == null) {
             return;
         }
@@ -32,6 +34,7 @@ public class Task2Test {
                 file.delete();
             }
         }
+        Files.deleteIfExists(path);
     }
 
     @Test

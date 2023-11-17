@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,10 +26,12 @@ public class DiskMap implements Map<String, String> {
     }
 
     private void createDirIfDirDoesNotExist() {
-        directory = new File("src/main/resources/hw6/task1");
-
-        if (!directory.exists()) {
-            directory.mkdirs();
+        try {
+            Path path = Path.of("src/main/resources/hw6/task1");
+            Files.createDirectories(path);
+            directory = new File(path.toString());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 

@@ -26,8 +26,9 @@ public class DiskMapTest {
     }
 
     @AfterEach
-    void tearDown() {
+    void tearDown() throws IOException {
         diskMap.clear();
+        Files.deleteIfExists(directory);
     }
 
     @Test

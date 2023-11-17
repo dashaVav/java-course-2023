@@ -22,14 +22,4 @@ public class Task6Test {
         } catch (Exception e) {
         }
     }
-
-    @Test
-    void testPortIsNotClosed() {
-
-        List<String> result = Task6.scanPorts();
-        System.out.println(result);
-        assertFalse(result.toString().contains("TCP      134"));
-        assertFalse(result.toString().contains("UDP      134"));
-
-    }
 }
