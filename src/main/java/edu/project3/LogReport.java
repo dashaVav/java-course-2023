@@ -9,8 +9,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class LogReport {
     private final String file;
     private final OffsetDateTime from;

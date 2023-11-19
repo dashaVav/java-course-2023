@@ -12,7 +12,7 @@ public final class LogParser {
 
     @SuppressWarnings("checkstyle:MagicNumber")
     public static Log parse(String logLine) {
-        String regex = "^(\\S+) (\\S+) \\S+ \\[([^\\]]+)\\] \"([^\"]+)\" (\\d+) (\\d+) \"([^\"]+)\" \"([^\"]+)\"$";
+        String regex = "^(\\S+) (\\S+) \\S+ \\[([^\\]]*)\\] \"([^\"]+)\" (\\d+) (\\d+) \"([^\"]+)\" \"([^\"]+)\"$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(logLine);
 
