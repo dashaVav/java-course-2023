@@ -63,7 +63,7 @@ class CreateFileTest {
         String expectedMarkdown = "#### Общая информация\n" +
             "| Метрика | Значение |\n" +
             "|:-:|-:|\n" +
-            "| Файл | `src\\main\\resources\\project3\\file.txt` |\n" +
+            "| Файл | `file.txt` |\n" +
             "| Начальная дата |- |\n" +
             "| Конечная дата |- |\n" +
             "| Количество запросов | 4 |\n" +
