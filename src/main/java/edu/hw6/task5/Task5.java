@@ -15,6 +15,7 @@ public final class Task5 {
 
     private static HttpClient client = HttpClient.newHttpClient();
     private static final int TIME_OUT = 10;
+    private static final HttpRequest REQUEST = request();
 
     private static long[] stringToLongArray(String str) {
         if (str.isEmpty()) {
@@ -26,18 +27,17 @@ public final class Task5 {
             .toArray();
     }
 
-    private static HttpRequest request(String str) {
+    private static HttpRequest request() {
         return HttpRequest.newBuilder()
-            .uri(URI.create(str))
+            .uri(URI.create("https://hacker-news.firebaseio.com/v0/topstories.json"))
             .GET()
             .timeout(Duration.ofSeconds(TIME_OUT))
             .build();
     }
 
     public static long[] hackerNewsTopStories() {
-        var request = request("https://hacker-news.firebaseio.com/v0/topstories.json");
         try {
-            var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            var response = client.send(REQUEST, HttpResponse.BodyHandlers.ofString());
             return stringToLongArray(response.body());
         } catch (Exception e) {
             return new long[0];
@@ -51,9 +51,8 @@ public final class Task5 {
     }
 
     public static String news(long id) {
-        var request = request(String.format("https://hacker-news.firebaseio.com/v0/item/%d.json", id));
         try {
-            var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            var response = client.send(REQUEST, HttpResponse.BodyHandlers.ofString());
             return titleFromResponseBody(response.body());
         } catch (Exception e) {
             return titleFromResponseBody("");
