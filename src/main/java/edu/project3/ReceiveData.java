@@ -30,7 +30,7 @@ public final class ReceiveData {
             var response = client.send(request, HttpResponse.BodyHandlers.ofString());
             return Arrays.stream(response.body().split("\n")).map(LogParser::parse).collect(Collectors.toList());
         } catch (Exception e) {
-            return List.of();
+            throw new RuntimeException(e);
         }
     }
 
@@ -39,7 +39,7 @@ public final class ReceiveData {
             List<String> logList = Files.readAllLines(path);
             return logList.stream().map(LogParser::parse).collect(Collectors.toList());
         } catch (IOException e) {
-            return List.of();
+            throw new RuntimeException(e);
         }
     }
 }
