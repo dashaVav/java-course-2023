@@ -4,35 +4,49 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import org.apache.commons.codec.digest.DigestUtils;
 
 public class PasswordHacking {
     public PasswordHacking(Map<String, String> map) {
-        this.map = new ConcurrentHashMap<>(map);
+        this.passwordLoginMap = new ConcurrentHashMap<>(map);
+        this.loginPasswordMap = new ConcurrentHashMap<>();
     }
 
-    public Map<String, String> map;
+    private final Map<String, String> passwordLoginMap;
+    private final Map<String, String> loginPasswordMap;
 
     public Map<String, String> decryptPasswords(int nTreads, int maxLenPassword) {
         ExecutorService threadPool = Executors.newFixedThreadPool(nTreads);
-
         for (int len = 1; len <= maxLenPassword; len++) {
-            for (int i = 0; i < nTreads; i++) {
-                int finalLen = len;
-                threadPool.execute(() -> generateAndCheckPasswords(finalLen));
+            PasswordGenerator passwordGenerator = new PasswordGenerator(len);
+            for (int i = 0; i <= nTreads; i++) {
+                threadPool.execute(() -> generateAndCheckPasswords(passwordGenerator));
             }
         }
+
         threadPool.shutdown();
-        return map;
+        try {
+            threadPool.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return loginPasswordMap;
     }
 
-    private void generateAndCheckPasswords(int lenPassword) {
-        PasswordGenerator passwordGenerator = new PasswordGenerator(lenPassword);
+    private void generateAndCheckPasswords(PasswordGenerator passwordGenerator) {
+
         String password = passwordGenerator.nextPassword();
         while (password != null) {
+            if (passwordLoginMap.isEmpty()) {
+                return;
+            }
+
             String hash = md5(password);
-            if (map.containsKey(hash)) {
-                map.put(password, map.get(hash));
+            if (passwordLoginMap.containsKey(hash)) {
+                loginPasswordMap.put(passwordLoginMap.get(hash), password);
+                passwordLoginMap.remove(hash);
             }
             password = passwordGenerator.nextPassword();
         }

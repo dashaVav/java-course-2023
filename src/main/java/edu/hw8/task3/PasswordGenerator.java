@@ -10,7 +10,7 @@ public class PasswordGenerator {
         this.indexes = new int[length];
     }
 
-    public String nextPassword() {
+    public synchronized String nextPassword() {
         if (nextIndexes()) {
             StringBuilder password = new StringBuilder();
             for (int index : indexes) {
