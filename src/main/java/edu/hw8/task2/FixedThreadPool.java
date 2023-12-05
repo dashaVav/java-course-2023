@@ -1,12 +1,17 @@
 package edu.hw8.task2;
 
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public final class FixedThreadPool implements TreadPool {
     private final Thread[] threads;
     private final int threadCount;
     private final BlockingQueue<Runnable> taskQueue;
+    private final AtomicInteger numberOfTasks = new AtomicInteger(0);
+    private final AtomicInteger numberOfCompletedTasks = new AtomicInteger(0);
+    private final CountDownLatch latch = new CountDownLatch(1);
 
     private FixedThreadPool(int threadCount) {
         this.threadCount = threadCount;
@@ -25,7 +30,14 @@ public final class FixedThreadPool implements TreadPool {
                 try {
                     while (true) {
                         Runnable task = taskQueue.take();
-                        task.run();
+                        Runnable combinedTask = () -> {
+                            task.run();
+                            numberOfCompletedTasks.incrementAndGet();
+                            if (numberOfCompletedTasks.get() == numberOfTasks.get()) {
+                                latch.countDown();
+                            }
+                        };
+                        combinedTask.run();
                     }
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
@@ -38,10 +50,12 @@ public final class FixedThreadPool implements TreadPool {
     @Override
     public void execute(Runnable runnable) {
         taskQueue.add(runnable);
+        numberOfTasks.incrementAndGet();
     }
 
     @Override
-    public void close() {
+    public void close() throws InterruptedException {
+        latch.await();
         for (Thread thread : threads) {
             thread.interrupt();
         }
