@@ -1,5 +1,7 @@
 package edu.hw7;
 
+import edu.hw7.task4.Task4MultiThread;
+import edu.hw7.task4.Task4SingleThread;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

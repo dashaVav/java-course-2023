@@ -1,4 +1,4 @@
-package edu.hw7;
+package edu.hw7.task4;
 
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicLong;
