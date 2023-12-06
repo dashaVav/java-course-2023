@@ -3,8 +3,8 @@ package edu.hw7;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicLong;
 
-public final class Task4 {
-    private Task4() {
+public final class Task4MultiThread {
+    private Task4MultiThread() {
     }
 
     private static final int WIDTH = 1000;

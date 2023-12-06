@@ -1,5 +1,7 @@
 package edu.hw7;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import lombok.Getter;
 
@@ -7,33 +9,26 @@ import lombok.Getter;
 public class Task1 {
     private final AtomicInteger counter = new AtomicInteger(0);
 
+    private static final int NUMBER_OF_THREADS = 3;
+
     public void increasingCounterByThreads(int n) {
-        var incrementor1 = new Thread(() -> {
-            for (int i = 0; i < n; i++) {
-                counter.incrementAndGet();
-            }
-        });
+        List<Thread> threads = new ArrayList<>();
+        for (int i = 0; i < NUMBER_OF_THREADS; i++) {
+            threads.add(new Thread(() -> {
+                for (int j = 0; j < n; j++) {
+                    counter.incrementAndGet();
+                }
+            }));
+        }
 
-        var incrementor2 = new Thread(() -> {
-            for (int i = 0; i < n; i++) {
-                counter.incrementAndGet();
-            }
-        });
-
-        var incrementor3 = new Thread(() -> {
-            for (int i = 0; i < n; i++) {
-                counter.incrementAndGet();
-            }
-        });
-
-        incrementor1.start();
-        incrementor2.start();
-        incrementor3.start();
+        for (Thread thread : threads) {
+            thread.start();
+        }
 
         try {
-            incrementor1.join();
-            incrementor2.join();
-            incrementor3.join();
+            for (Thread thread : threads) {
+                thread.join();
+            }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

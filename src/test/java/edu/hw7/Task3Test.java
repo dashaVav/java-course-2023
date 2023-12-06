@@ -2,23 +2,23 @@ package edu.hw7;
 
 import edu.hw7.task3.Person;
 import edu.hw7.task3.PersonDatabase;
-import edu.hw7.task3.PersonDatabaseImpl;
+import edu.hw7.task3.PersonDatabaseImplLock;
+import edu.hw7.task3.PersonDatabaseImplSynchronized;
 import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import java.util.stream.Stream;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Task3Test {
-    private PersonDatabase database;
-
-    @BeforeEach
-    void setUp() {
-        database = new PersonDatabaseImpl();
+    private static Stream<PersonDatabase> providePersonDatabaseImplementations() {
+        return Stream.of(new PersonDatabaseImplLock(), new PersonDatabaseImplSynchronized());
     }
 
-    @Test
-    void testAddAndFind() {
+    @ParameterizedTest
+    @MethodSource("providePersonDatabaseImplementations")
+    void testAddAndFind(PersonDatabase database) {
         Person person = new Person(1, "User", "Street", "123-45-67");
         Person anotherPerson = new Person(2, "Another User", "Street", "123-45-67-89");
 
@@ -30,8 +30,9 @@ public class Task3Test {
         assertEquals(person, database.findByPhone("123-45-67").get(0));
     }
 
-    @Test
-    void testDelete() {
+    @ParameterizedTest
+    @MethodSource("providePersonDatabaseImplementations")
+    void testDelete(PersonDatabase database) {
         Person person = new Person(1, "User", "Street", "123-45-67");
         database.add(person);
 
@@ -42,8 +43,9 @@ public class Task3Test {
         assertTrue(database.findByPhone("123-45-67").isEmpty());
     }
 
-    @Test
-    void testFindByNonexistentAttributes() {
+    @ParameterizedTest
+    @MethodSource("providePersonDatabaseImplementations")
+    void testFindByNonexistentAttributes(PersonDatabase database) {
         Person person = new Person(1, "User", "Street", "123-45-67");
         database.add(person);
 
@@ -52,8 +54,9 @@ public class Task3Test {
         assertTrue(database.findByPhone("NonexistentPhone").isEmpty());
     }
 
-    @Test
-    void testConcurrentAccess1() {
+    @ParameterizedTest
+    @MethodSource("providePersonDatabaseImplementations")
+    void testConcurrentAccess(PersonDatabase database) {
         int numberOfThreads = 10;
         int personsPerThread = 100;
 

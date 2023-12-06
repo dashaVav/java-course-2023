@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class PersonDatabaseImpl implements PersonDatabase {
+public class PersonDatabaseImplLock implements PersonDatabase {
     private final Map<Integer, Person> personById = new HashMap<>();
     private final Map<String, List<Person>> personByName = new HashMap<>();
     private final Map<String, List<Person>> personByAddress = new HashMap<>();

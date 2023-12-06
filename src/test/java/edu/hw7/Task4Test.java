@@ -5,9 +5,20 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Task4Test {
     @Test
-    void testPiCalculationAccuracy() {
+    void testPiCalculationAccuracySingleThread() {
         int simulations = 1000000;
-        double calculatedPi = Task4.calculationOfPiUsingMonteCarloMethod(1, simulations);
+        double calculatedPi = Task4SingleThread.calculationOfPiUsingMonteCarloMethod(simulations);
+
+        double exactPi = Math.PI;
+
+        double tolerance = 0.01;
+
+        assertTrue(Math.abs(calculatedPi - exactPi) < tolerance);
+    }
+    @Test
+    void testPiCalculationAccuracyMultiThread() {
+        int simulations = 1000000;
+        double calculatedPi = Task4MultiThread.calculationOfPiUsingMonteCarloMethod(1, simulations);
 
         double exactPi = Math.PI;
 
@@ -21,15 +32,15 @@ public class Task4Test {
         int simulations = 10_000_000;
 
         long startTimeSingleThread = System.nanoTime();
-        Task4.calculationOfPiUsingMonteCarloMethod(1, simulations);
+        Task4MultiThread.calculationOfPiUsingMonteCarloMethod(1, simulations);
         long endTimeSingleThread = System.nanoTime();
 
         long startTimeTwoThreads = System.nanoTime();
-        Task4.calculationOfPiUsingMonteCarloMethod(2, simulations);
+        Task4MultiThread.calculationOfPiUsingMonteCarloMethod(2, simulations);
         long endTimeTwoThreads = System.nanoTime();
 
         long startTimeFourThreads = System.nanoTime();
-        Task4.calculationOfPiUsingMonteCarloMethod(4, simulations);
+        Task4MultiThread.calculationOfPiUsingMonteCarloMethod(4, simulations);
         long endTimeFourThreads = System.nanoTime();
 
         System.out.println("Time spent on 1 thread and 10 million simulations: " +
@@ -45,7 +56,7 @@ public class Task4Test {
         int[] simulations = {10_000_000, 100_000_000, 1_000_000_000};
 
         for (int simulation : simulations) {
-            double calculatedPi = Task4.calculationOfPiUsingMonteCarloMethod(4, simulation);
+            double calculatedPi = Task4MultiThread.calculationOfPiUsingMonteCarloMethod(4, simulation);
             double exactPi = Math.PI;
             double accuracy = (1 - Math.abs(calculatedPi - exactPi) / exactPi) * 100;
             System.out.println(String.format("Accuracy in %d simulations: ", simulation) + accuracy);
