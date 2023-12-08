@@ -13,7 +13,7 @@ public class Cell {
         WALL, PASSAGE, WAY
     }
 
-    Cell(int col, int row) {
+    public Cell(int col, int row) {
         this.col = col;
         this.row = row;
         type = Type.WALL;
