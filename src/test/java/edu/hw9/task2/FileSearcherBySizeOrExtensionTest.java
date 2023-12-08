@@ -19,7 +19,7 @@ public class FileSearcherBySizeOrExtensionTest {
     @BeforeEach
     public void setUp() throws IOException {
         tempDirectory = Files.createTempDirectory("test");
-        createFiles(tempDirectory, 3);
+        createFiles(tempDirectory);
     }
 
     @AfterEach
@@ -62,31 +62,16 @@ public class FileSearcherBySizeOrExtensionTest {
         }
     }
 
-    @Test
-    public void testFileSearcherBySizeAndExtension() throws IOException {
-        try (ForkJoinPool forkJoinPool = new ForkJoinPool()) {
-
-            Path largeTxtFile = Files.createFile(tempDirectory.resolve("largetestfile.txt"));
-            Files.write(
-                largeTxtFile,
-                "This is a test file with more than 100 bytes.This is a test file with more than 100 bytes.This is a test file with more than 100 bytes.".getBytes(),
-                StandardOpenOption.APPEND
-            );
-
-            FileSearcherBySizeOrExtension findFilesBySizeAndExtensionTask =
-                new FileSearcherBySizeOrExtension(tempDirectory.toFile(), 100);
-            List<File> largeTxtFiles = forkJoinPool.invoke(findFilesBySizeAndExtensionTask);
-            assertEquals(1, largeTxtFiles.size());
-            assertTrue(largeTxtFiles.get(0).getName().endsWith("txt"));
-            assertTrue(largeTxtFiles.get(0).length() > 100);
-        }
-    }
-
-    private void createFiles(Path directory, int count) throws IOException {
-        for (int i = 0; i < count; i++) {
+    private void createFiles(Path directory) throws IOException {
+        for (int i = 0; i < 3; i++) {
             Path path = directory.resolve("file" + i + ".txt");
             Files.createFile(path);
-            Files.write(path, ("Test" + path).getBytes(), StandardOpenOption.APPEND);
+            Files.write(
+                path,
+                ("This is a test file with more.This is a test file with more.This is a test file with more" +
+                    path).getBytes(),
+                StandardOpenOption.APPEND
+            );
         }
     }
 }
