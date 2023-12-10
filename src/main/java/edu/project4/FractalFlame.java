@@ -7,7 +7,9 @@ import edu.project4.writer.ImageFormat;
 import edu.project4.writer.Writer;
 
 public final class FractalFlame {
-    private FractalFlame() {}
+    private FractalFlame() {
+    }
+
     @SuppressWarnings("ParameterNumber")
     public static void create(
         int n,
