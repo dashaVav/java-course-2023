@@ -3,7 +3,9 @@ package edu.project4.render;
 import edu.project4.Pixel;
 
 public class Correction {
-    private Correction() {}
+    private Correction() {
+    }
+
     private static final int MAX_RGB = 255;
     private static final double GAMMA = 2.2;
 

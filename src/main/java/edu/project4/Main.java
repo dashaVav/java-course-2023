@@ -4,7 +4,9 @@ import edu.project4.writer.ImageFormat;
 
 @SuppressWarnings("MagicNumber")
 public final class Main {
-    private Main() {}
+    private Main() {
+    }
+
     public static void main(String[] args) {
         int n = 100000;
         int eqCount = 5;

@@ -22,7 +22,7 @@ public class MultiThreadedRenderer implements Renderer {
         }
     }
 
-    @SuppressWarnings({"ParameterNumber", "MagicNumber"})
+    @SuppressWarnings("ParameterNumber")
     @Override
     public Pixel[][] render(
         int n, int eqCount, int iter, int xRes, int yRes, Coefficient[] coefficients,
@@ -48,6 +48,7 @@ public class MultiThreadedRenderer implements Renderer {
         return newPixels;
     }
 
+    @SuppressWarnings("MagicNumber")
     private void processIteration(
         int eqCount, int iter, int xRes, int yRes, Coefficient[] coefficients, int symmetry, String func
     ) {

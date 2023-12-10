@@ -8,13 +8,19 @@ public final class NonlinearTransformation {
         final double sqrt = Math.sqrt(x * x + y * y);
         Point point;
         switch (func) {
-            case "linear" -> point = new Point(x, y);
-            case "sinusoidal" -> point = new Point(Math.sin(x), Math.sin(y));
+            case "linear" -> {
+                point = new Point(x, y);
+            }
+            case "sinusoidal" -> {
+                point = new Point(Math.sin(x), Math.sin(y));
+            }
             case "spherical" -> {
                 double r = 1.0 / (x * x + y * y);
                 point = new Point(r * x, r * y);
             }
-            case "polar" -> point = new Point(Math.atan2(y, x) / Math.PI, sqrt - 1.0);
+            case "polar" -> {
+                point = new Point(Math.atan2(y, x) / Math.PI, sqrt - 1.0);
+            }
             case "heart" -> {
                 double theta = Math.atan2(y, x);
                 point = new Point(sqrt * Math.sin(theta * sqrt), -sqrt * Math.cos(theta * sqrt));
