@@ -2,6 +2,7 @@ package edu.project4;
 
 import edu.project4.writer.ImageFormat;
 
+@SuppressWarnings("MagicNumber")
 public class Main {
     public static void main(String[] args) {
         int n = 100000;

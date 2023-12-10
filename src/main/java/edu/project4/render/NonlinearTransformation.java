@@ -1,6 +1,7 @@
 package edu.project4.render;
 
-public class NonlinearTransformation {
+public final class NonlinearTransformation {
+    private NonlinearTransformation() {}
     public static Point transformXY(String func, double x, double y) {
         final double sqrt = Math.sqrt(x * x + y * y);
         switch (func) {

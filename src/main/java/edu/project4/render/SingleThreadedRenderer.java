@@ -28,12 +28,12 @@ public class SingleThreadedRenderer implements Renderer {
                 for (int j = 0; j < symmetry; j++) {
                     theta += ((2 * Math.PI) / (symmetry));
 
-                    double x_rot = newX * cos(theta) - newY * sin(theta);
-                    double y_rot = newX * sin(theta) + newY * cos(theta);
+                    double xRot = newX * cos(theta) - newY * sin(theta);
+                    double yRot = newX * sin(theta) + newY * cos(theta);
 
-                    if (x_rot >= X_MIN && x_rot <= X_MAX && y_rot >= Y_MIN && y_rot <= Y_MAX) {
-                        int x1 = xRes - (int) (((X_MAX - x_rot) / (X_MAX - X_MIN)) * xRes);
-                        int y1 = yRes - (int) (((Y_MAX - y_rot) / (Y_MAX - Y_MIN)) * yRes);
+                    if (xRot >= X_MIN && xRot <= X_MAX && yRot >= Y_MIN && yRot <= Y_MAX) {
+                        int x1 = xRes - (int) (((X_MAX - xRot) / (X_MAX - X_MIN)) * xRes);
+                        int y1 = yRes - (int) (((Y_MAX - yRot) / (Y_MAX - Y_MIN)) * yRes);
 
                         if (x1 > -1 && x1 < xRes && y1 > -1 && y1 < yRes) {
                             if (pixels[x1][y1].counter == 0) {
