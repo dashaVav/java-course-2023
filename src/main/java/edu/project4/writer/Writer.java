@@ -1,16 +1,21 @@
-package edu.project4;
+package edu.project4.writer;
 
-import javax.imageio.ImageIO;
+import edu.project4.Pixel;
+import edu.project4.writer.ImageFormat;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.util.Locale;
+import javax.imageio.ImageIO;
 
 public final class Writer {
-    private Writer() {}
-    static void writeImage(Pixel[][] pixels, String filename) {
+    private Writer() {
+    }
+
+    public static void writeImage(Pixel[][] pixels, String filename, ImageFormat format) {
         int xRes = pixels.length;
         int yRes = pixels[0].length;
-
         BufferedImage image = new BufferedImage(xRes, yRes, BufferedImage.TYPE_INT_RGB);
 
         for (int i = 0; i < xRes; i++) {
@@ -21,7 +26,7 @@ public final class Writer {
         }
 
         try {
-            ImageIO.write(image, "png", new File(filename));
+            ImageIO.write(image,  format.name().toLowerCase(), new File(filename));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
