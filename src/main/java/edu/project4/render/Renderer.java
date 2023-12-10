@@ -9,6 +9,7 @@ public interface Renderer {
     double Y_MIN = -1;
     double Y_MAX = 1;
 
+    @SuppressWarnings("MagicNumber")
     Pixel[][] render(
         int n, int eqCount, int iter, int xRes, int yRes, Coefficient[] coefficients,
         Pixel[][] pixels, int symmetry, String function

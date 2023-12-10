@@ -10,6 +10,7 @@ public final class Writer {
     private Writer() {
     }
 
+    @SuppressWarnings("MagicNumber")
     public static void writeImage(Pixel[][] pixels, String filename, ImageFormat format) {
         int xRes = pixels.length;
         int yRes = pixels[0].length;

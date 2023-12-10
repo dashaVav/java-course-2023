@@ -10,7 +10,9 @@ public class Coefficient {
     public double d;
     public double e;
     public double f;
-    public double red, green, blue;
+    public double red;
+    public double green;
+    public double blue;
 
     private static double rand(double min, double max) {
         return ThreadLocalRandom.current().nextDouble(min, max);

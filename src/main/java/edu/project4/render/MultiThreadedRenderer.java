@@ -22,6 +22,7 @@ public class MultiThreadedRenderer implements Renderer {
         }
     }
 
+    @SuppressWarnings({"ParameterNumber", "MagicNumber"})
     @Override
     public Pixel[][] render(
         int n, int eqCount, int iter, int xRes, int yRes, Coefficient[] coefficients,
