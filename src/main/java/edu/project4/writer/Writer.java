@@ -1,12 +1,9 @@
 package edu.project4.writer;
 
 import edu.project4.Pixel;
-import edu.project4.writer.ImageFormat;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.util.Locale;
 import javax.imageio.ImageIO;
 
 public final class Writer {
@@ -26,7 +23,7 @@ public final class Writer {
         }
 
         try {
-            ImageIO.write(image,  format.name().toLowerCase(), new File(filename));
+            ImageIO.write(image, format.name().toLowerCase(), new File(filename + "." + format.name().toLowerCase()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
