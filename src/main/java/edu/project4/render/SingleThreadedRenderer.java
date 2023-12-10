@@ -5,7 +5,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
-public class OneTreadRenderer implements Renderer {
+public class SingleThreadedRenderer implements Renderer {
     @Override
     public Pixel[][] render(
         int n, int eqCount, int iter, int xRes, int yRes, Coefficient[] coefficients,
