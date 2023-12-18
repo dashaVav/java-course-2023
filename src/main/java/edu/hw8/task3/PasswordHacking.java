@@ -2,6 +2,7 @@ package edu.hw8.task3;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -13,8 +14,8 @@ public class PasswordHacking {
         this.loginPasswordMap = new ConcurrentHashMap<>();
     }
 
-    private final Map<String, String> passwordLoginMap;
-    private final Map<String, String> loginPasswordMap;
+    private final ConcurrentMap<String, String> passwordLoginMap;
+    private final  ConcurrentMap<String, String> loginPasswordMap;
 
     public Map<String, String> decryptPasswords(int nTreads, int maxLenPassword) {
         ExecutorService threadPool = Executors.newFixedThreadPool(nTreads);
