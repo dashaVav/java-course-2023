@@ -32,36 +32,36 @@ public class DFSUndirectedGraph {
     }
 
     public List<Integer> dfs(int start, int end) {
-        ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-        Deque<Integer> stack = new ConcurrentLinkedDeque<>();
-        Map<Integer, Integer> predecessors = new HashMap<>();
+        try (ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime()
+            .availableProcessors())) {
+            Deque<Integer> stack = new ConcurrentLinkedDeque<>();
+            Map<Integer, Integer> predecessors = new HashMap<>();
 
-        stack.push(start);
-        visited.add(start);
+            stack.push(start);
+            visited.add(start);
 
-        while (!stack.isEmpty() || visited.size() != vertices) {
-            if (stack.isEmpty()) {
-                continue;
-            }
-            int currentPoint = stack.pop();
-
-            if (currentPoint == end) {
-                executorService.shutdown();
-                return buildPath(predecessors, start, end);
-            }
-
-            executorService.execute(() -> {
-                for (int neighbor : adjacencyList[currentPoint]) {
-                    if (!visited.contains(neighbor)) {
-                        stack.push(neighbor);
-                        visited.add(neighbor);
-                        predecessors.put(neighbor, currentPoint);
-                    }
+            while (!stack.isEmpty() || visited.size() != vertices) {
+                if (stack.isEmpty()) {
+                    continue;
                 }
-            });
-        }
+                int currentPoint = stack.pop();
 
-        executorService.shutdown();
+                if (currentPoint == end) {
+                    executorService.shutdown();
+                    return buildPath(predecessors, start, end);
+                }
+
+                executorService.execute(() -> {
+                    for (int neighbor : adjacencyList[currentPoint]) {
+                        if (!visited.contains(neighbor)) {
+                            stack.push(neighbor);
+                            visited.add(neighbor);
+                            predecessors.put(neighbor, currentPoint);
+                        }
+                    }
+                });
+            }
+        }
         return List.of();
     }
 
