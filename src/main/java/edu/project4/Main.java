@@ -14,7 +14,7 @@ public final class Main {
         int xRes = 1920;
         int yRes = 1080;
         int symmetry = 5;
-        String function = "spiral";
+        String function = "disk";
         String filename = "fractal_flame";
         ImageFormat imageFormat = ImageFormat.PNG;
         FractalFlame.create(n, eqCount, iter, xRes, yRes, symmetry, function, filename, imageFormat);

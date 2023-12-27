@@ -1,6 +1,7 @@
 package edu.project4.render;
 
 import edu.project4.Pixel;
+
 import java.util.concurrent.ThreadLocalRandom;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;

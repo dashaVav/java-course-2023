@@ -1,44 +1,51 @@
 package edu.project4.render;
 
+import edu.project4.render.transformation.DiskTransformation;
+import edu.project4.render.transformation.HeartTransformation;
+import edu.project4.render.transformation.LinearTransformation;
+import edu.project4.render.transformation.PolarTransformation;
+import edu.project4.render.transformation.SinusoidalTransformation;
+import edu.project4.render.transformation.SphericalTransformation;
+import edu.project4.render.transformation.SpiralTransformation;
+
 public final class NonlinearTransformation {
     private NonlinearTransformation() {
     }
 
     public static Point transformXY(String func, double x, double y) {
-        final double sqrt = Math.sqrt(x * x + y * y);
-        Point point;
+        Point point = new Point(x, y);
+        Point newPoint;
         switch (func) {
             case "linear" -> {
-                point = new Point(x, y);
+                LinearTransformation linearTransformation = new LinearTransformation();
+                newPoint = linearTransformation.transform(point);
             }
             case "sinusoidal" -> {
-                point = new Point(Math.sin(x), Math.sin(y));
+                SinusoidalTransformation sinusoidalTransformation = new SinusoidalTransformation();
+                newPoint = sinusoidalTransformation.transform(point);
             }
             case "spherical" -> {
-                double r = 1.0 / (x * x + y * y);
-                point = new Point(r * x, r * y);
+                SphericalTransformation sphericalTransformation = new SphericalTransformation();
+                newPoint = sphericalTransformation.transform(point);
             }
             case "polar" -> {
-                point = new Point(Math.atan2(y, x) / Math.PI, sqrt - 1.0);
+                PolarTransformation polarTransformation = new PolarTransformation();
+                newPoint = polarTransformation.transform(point);
             }
             case "heart" -> {
-                double theta = Math.atan2(y, x);
-                point = new Point(sqrt * Math.sin(theta * sqrt), -sqrt * Math.cos(theta * sqrt));
+                HeartTransformation heartTransformation = new HeartTransformation();
+                newPoint = heartTransformation.transform(point);
             }
             case "disk" -> {
-                double r = sqrt * Math.PI;
-                double theta = Math.atan2(y, x) / Math.PI;
-                point = new Point(theta * Math.sin(r), theta * Math.cos(r));
+                DiskTransformation diskTransformation = new DiskTransformation();
+                newPoint = diskTransformation.transform(point);
             }
             case "spiral" -> {
-                double theta = Math.atan2(y, x);
-                point = new Point(
-                    (1.0 / sqrt) * (Math.cos(theta) + Math.sin(sqrt)),
-                    (1.0 / sqrt) * (Math.sin(theta) - Math.cos(sqrt))
-                );
+                SpiralTransformation spiralTransformation = new SpiralTransformation();
+                newPoint = spiralTransformation.transform(point);
             }
             default -> throw new RuntimeException("Incorrect nonlinear function");
         }
-        return point;
+        return newPoint;
     }
 }
