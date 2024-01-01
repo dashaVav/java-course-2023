@@ -21,6 +21,7 @@ import static java.lang.invoke.MethodHandles.lookup;
 
 @State(Scope.Thread)
 public class ReflectionBenchmark {
+    private static final int TIME_VALUE = 5;
     public static void main(String[] args)
         throws Throwable {
         Options options = new OptionsBuilder()
@@ -32,19 +33,11 @@ public class ReflectionBenchmark {
             .forks(1)
             .warmupForks(1)
             .warmupIterations(1)
-            .warmupTime(TimeValue.seconds(5))
+            .warmupTime(TimeValue.seconds(TIME_VALUE))
             .measurementIterations(1)
-            .measurementTime(TimeValue.seconds(5))
+            .measurementTime(TimeValue.seconds(TIME_VALUE))
             .build();
         new Runner(options).run();
-    }
-
-    @FunctionalInterface
-    interface StudentNameGetter {
-        String name(Student student);
-    }
-
-    record Student(String name, String surname) {
     }
 
     private Student student;
@@ -94,5 +87,4 @@ public class ReflectionBenchmark {
         bh.consume(name);
     }
 }
-
 
